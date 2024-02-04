@@ -1,8 +1,8 @@
---001
+--002
 local Pine3D = require("/Pine3D")
 local PrimeUI = require("/PrimeUI")
 
-local win = window.create(term.current(), 2, 3, 20, 5)
+local win = window.create(term.current(), 2, 3, 50, 19)
 --PrimeUI.borderBox(win, 1, 1, 20, 5)
 
 local entries = {
@@ -44,6 +44,7 @@ local function main()
 	    local objectIndex, polyIndex = ThreeDFrame:getObjectIndexTrace(objects, x, y)
 	    if objectIndex then -- check if an object was clicked
 				clicked = {objectIndex,polyIndex}
+				table.remove(objects[clicked[1]][7], clicked[2])
 	    end
 	  end
 	end
