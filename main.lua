@@ -1,4 +1,4 @@
---002
+--003
 local Pine3D = require("/Pine3D")
 local PrimeUI = require("/PrimeUI")
 
@@ -12,7 +12,7 @@ local entries = {
     ["Item 4"] = true,
     ["Item 5"] = false
 }
-PrimeUI.checkSelectionBox(term.current(), 4, 6, 40, 10, entries)
+PrimeUI.selectionBox(term.current(), 4, 6, 40, 10, entries)
 
 local ThreeDFrame = Pine3D.newFrame()
 ThreeDFrame:setCamera(-1, 0, -1, 0, 45, -45)
@@ -28,9 +28,12 @@ for x = 1, size do
     end
   end
 end
-
+cleared = false
 local function main()
 	while true do
+		if cleared == true then
+			break
+		end
 	  -- render the scene
 	  ThreeDFrame:drawObjects(objects)
 	  ThreeDFrame:drawBuffer()
@@ -51,6 +54,10 @@ local function main()
 end
 
 local function ui()
-	PrimeUI.run()
+	local _, _, sel = PrimeUI.run()
+	cleared = true
+	sleep(0.5)
+	os.execute("clear")
+	print(sel)
 end
-parallel.waitForAny(main,ui)
+parallel.waitForAll(main,ui)
