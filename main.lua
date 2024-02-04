@@ -1,6 +1,9 @@
 local Pine3D = require("/Pine3D")
 local PrimeUI = require("/PrimeUI")
 
+local win = window.create(term.current(), 2, 3, 20, 5)
+PrimeUI.borderBox(win, 1, 1, 20, 5)
+
 local ThreeDFrame = Pine3D.newFrame()
 ThreeDFrame:setCamera(-1, 0, -1, 0, 45, -45)
 
@@ -21,7 +24,7 @@ local function main()
 	  -- render the scene
 	  ThreeDFrame:drawObjects(objects)
 	  ThreeDFrame:drawBuffer()
-	
+	  win.redraw()
 	  -- wait for user input
 	  local event, key, x, y = os.pullEvent()
 		
@@ -34,11 +37,6 @@ local function main()
 	    end
 	  end
 	end
-end
-
-local function ui()
-	PrimeUI.clear()
-	PrimeUI.borderBox(term.current(), 4, 6, 40, 10)
 end
 
 parallel.waitForAny(main,ui)
