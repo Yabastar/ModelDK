@@ -1,4 +1,4 @@
---003
+--004
 local Pine3D = require("/Pine3D")
 local PrimeUI = require("/PrimeUI")
 
@@ -28,12 +28,9 @@ for x = 1, size do
     end
   end
 end
-cleared = false
+
 local function main()
 	while true do
-		if cleared == true then
-			break
-		end
 	  -- render the scene
 	  ThreeDFrame:drawObjects(objects)
 	  ThreeDFrame:drawBuffer()
@@ -55,9 +52,5 @@ end
 
 local function ui()
 	local _, _, sel = PrimeUI.run()
-	cleared = true
-	sleep(0.5)
-	os.execute("clear")
-	print(sel)
 end
-parallel.waitForAll(main,ui)
+parallel.waitForAny(main,ui)
