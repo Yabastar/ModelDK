@@ -1,8 +1,18 @@
+--001
 local Pine3D = require("/Pine3D")
 local PrimeUI = require("/PrimeUI")
 
 local win = window.create(term.current(), 2, 3, 20, 5)
-PrimeUI.borderBox(win, 1, 1, 20, 5)
+--PrimeUI.borderBox(win, 1, 1, 20, 5)
+
+local entries = {
+    ["Item 1"] = false,
+    ["Item 2"] = false,
+    ["Item 3"] = "R",
+    ["Item 4"] = true,
+    ["Item 5"] = false
+}
+PrimeUI.checkSelectionBox(term.current(), 4, 6, 40, 10, entries)
 
 local ThreeDFrame = Pine3D.newFrame()
 ThreeDFrame:setCamera(-1, 0, -1, 0, 45, -45)
@@ -33,10 +43,13 @@ local function main()
 	    -- pass the rendered objects with the coordinates of the clicked pixel
 	    local objectIndex, polyIndex = ThreeDFrame:getObjectIndexTrace(objects, x, y)
 	    if objectIndex then -- check if an object was clicked
-		clicked = [objectIndex,polyIndex]
+				clicked = {objectIndex,polyIndex}
 	    end
 	  end
 	end
 end
 
+local function ui()
+	PrimeUI.run()
+end
 parallel.waitForAny(main,ui)
